@@ -15,7 +15,11 @@ export const metadata = {
   title: "Netflix - Watch TV Shows Online, Watch Movies Online",
   description:
     "Netflix is a streaming service that offers a wide variety of award-winning TV shows, movies, anime, documentaries, and more on thousands of internet-connected devices.",
+  icons: {
+    icon: "/icons/netflix-logo-icon.svg",
+  },
 };
+
 
 
 export default function RootLayout({ children }) {
