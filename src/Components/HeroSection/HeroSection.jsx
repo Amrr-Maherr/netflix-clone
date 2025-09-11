@@ -1,11 +1,19 @@
 import Header from "../../Components/header/Header"
 import FadeContent from "../animation/FadeContent/FadeContent";
 import SplitText from "../animation/SplitText/SplitText";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 export default function Hero() {
   return (
     <>
       <Header />
-      <FadeContent className="bg-black" blur={true} duration={1000} easing="ease" initialOpacity={0}>
+      <FadeContent
+        className="bg-black"
+        blur={true}
+        duration={1000}
+        easing="ease"
+        initialOpacity={0}
+      >
         <section
           className="relative h-screen w-full bg-cover bg-center"
           style={{ backgroundImage: "url('/images/bg_image.jpg')" }}
@@ -54,14 +62,14 @@ export default function Hero() {
               textAlign="center"
             />
             <div className="mt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-[830px]">
-              <input
+              <Input
                 type="email"
                 placeholder="Email address"
-                className="w-full flex-1 px-4 py-3 rounded-md bg-black/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 text-sm sm:text-base"
+                className="w-full flex-1 h-[60px] px-4 rounded-md bg-black/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E50914] text-sm sm:text-base border-0"
               />
-              <button className="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 sm:px-6 py-3 rounded-md transition text-sm sm:text-base">
+              <Button className="bg-[#E50914] hover:bg-[#B00710] text-white font-semibold px-5 sm:px-6 h-[60px] rounded-md transition text-sm sm:text-base">
                 Get Started &gt;
-              </button>
+              </Button>
             </div>
           </div>
         </section>
