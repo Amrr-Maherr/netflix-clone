@@ -4,7 +4,7 @@ export default function Hero() {
       className="relative h-screen w-full bg-cover bg-center"
       style={{ backgroundImage: "url('/images/bg_image.jpg')" }}
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/60"></div>
 
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 sm:px-6 md:px-12 text-center">
         <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg max-w-3xl">
