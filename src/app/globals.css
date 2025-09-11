@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+.container {
+  @apply px-4 sm:px-6 md:px-12 lg:px-[22.125rem];
+  /* responsive padding */
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
