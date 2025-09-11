@@ -20,6 +20,7 @@ export const StaggeredMenu = ({
   onMenuClose,
 }) => {
   const [open, setOpen] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
   const openRef = useRef(false);
 
   const panelRef = useRef(null);
@@ -50,12 +51,7 @@ export const StaggeredMenu = ({
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
 
-      const plusH = plusHRef.current;
-      const plusV = plusVRef.current;
-      const icon = iconRef.current;
-      const textInner = textInnerRef.current;
-
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel) return;
 
       let preLayers = [];
       if (preContainer) {
@@ -63,17 +59,40 @@ export const StaggeredMenu = ({
       }
       preLayerElsRef.current = preLayers;
 
+      // إخفاء العناصر فورًا منع الفلاش
       const offscreen = position === "left" ? -100 : 100;
-      gsap.set([panel, ...preLayers], { xPercent: offscreen });
+      gsap.set([panel, ...preLayers], {
+        xPercent: offscreen,
+        visibility: "visible", // تأكد من أن العناصر مرئية بعد وضعها خارج الشاشة
+      });
 
-      gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
-      gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
-      gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
+      // إخفاء محتويات الـ panel أيضًا
+      const itemEls = Array.from(panel.querySelectorAll(".sm-panel-itemLabel"));
+      const numberEls = Array.from(
+        panel.querySelectorAll(".sm-panel-list[data-numbering] .sm-panel-item")
+      );
+      const socialTitle = panel.querySelector(".sm-socials-title");
+      const socialLinks = Array.from(
+        panel.querySelectorAll(".sm-socials-link")
+      );
 
-      gsap.set(textInner, { yPercent: 0 });
+      if (itemEls.length) gsap.set(itemEls, { yPercent: 140, rotate: 10 });
+      if (numberEls.length) gsap.set(numberEls, { ["--sm-num-opacity"]: 0 });
+      if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
+      if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
 
+     
+      gsap.set(plusHRef.current, { transformOrigin: "50% 50%", rotate: 0 });
+      gsap.set(plusVRef.current, { transformOrigin: "50% 50%", rotate: 90 });
+      gsap.set(iconRef.current, { rotate: 0, transformOrigin: "50% 50%" });
+      gsap.set(textInnerRef.current, { yPercent: 0 });
       if (toggleBtnRef.current)
         gsap.set(toggleBtnRef.current, { color: menuButtonColor });
+
+     
+      openRef.current = false;
+      setOpen(false);
+      setIsInitialized(true);
     });
     return () => ctx.revert();
   }, [menuButtonColor, position]);
@@ -371,11 +390,13 @@ export const StaggeredMenu = ({
         style={accentColor ? { ["--sm-accent"]: accentColor } : undefined}
         data-position={position}
         data-open={open || undefined}
+        data-initialized={isInitialized || undefined}
       >
         <div
           ref={preLayersRef}
           className="sm-prelayers absolute top-0 right-0 bottom-0 pointer-events-none z-[5]"
           aria-hidden="true"
+          style={{ visibility: isInitialized ? "visible" : "hidden" }}
         >
           {(() => {
             const raw =
@@ -465,7 +486,10 @@ export const StaggeredMenu = ({
           id="staggered-menu-panel"
           ref={panelRef}
           className="staggered-menu-panel absolute top-0 right-0  !h-screen bg-white flex flex-col p-[6em_2em_2em_2em] overflow-y-auto z-10 backdrop-blur-[12px]"
-          style={{ WebkitBackdropFilter: "blur(12px)" }}
+          style={{
+            WebkitBackdropFilter: "blur(12px)",
+            visibility: isInitialized ? "visible" : "hidden",
+          }}
           aria-hidden={!open}
         >
           <div className="sm-panel-inner flex-1 flex flex-col gap-5">
@@ -553,8 +577,7 @@ export const StaggeredMenu = ({
 .sm-scope .sm-panel-itemWrap { position: relative; overflow: hidden; line-height: 1; }
 .sm-scope .sm-icon-line { position: absolute; left: 50%; top: 50%; width: 100%; height: 2px; background: currentColor; border-radius: 2px; transform: translate(-50%, -50%); will-change: transform; }
 .sm-scope .sm-line { display: none !important; }
-.sm-scope .staggered-menu-panel { poimport StaggeredMenu from '../../../ts-default/Components/StaggeredMenu/StaggeredMenu';
-sition: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 100%; background: white; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; }
+.sm-scope .staggered-menu-panel { position: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 100%; background: white; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 6em 2em 2em 2em; overflow-y: auto; z-index: 10; }
 .sm-scope [data-position='left'] .staggered-menu-panel { right: auto; left: 0; }
 .sm-scope .sm-prelayers { position: absolute; top: 0; right: 0; bottom: 0; width: clamp(260px, 38vw, 420px); pointer-events: none; z-index: 5; }
 .sm-scope [data-position='left'] .sm-prelayers { right: auto; left: 0; }
@@ -578,8 +601,16 @@ sition: absolute; top: 0; right: 0; width: clamp(260px, 38vw, 420px); height: 10
 .sm-scope .sm-panel-item:hover { color: var(--sm-accent, #ff0000); }
 .sm-scope .sm-panel-list[data-numbering] { counter-reset: smItem; }
 .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after { counter-increment: smItem; content: counter(smItem, decimal-leading-zero); position: absolute; top: 0.1em; right: 3.2em; font-size: 18px; font-weight: 400; color: var(--sm-accent, #ff0000); letter-spacing: 0; pointer-events: none; user-select: none; opacity: var(--sm-num-opacity, 0); }
-@media (max-width: 1024px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .staggered-menu-wrapper[data-open] } }
-@media (max-width: 640px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .staggered-menu-wrapper[data-open] .sm-logo-img { filter: invert(100%); } }
+
+/* منع الفلاش عند التحميل */
+.sm-scope .staggered-menu-wrapper:not([data-initialized]) .staggered-menu-panel,
+.sm-scope .staggered-menu-wrapper:not([data-initialized]) .sm-prelayers,
+.sm-scope .staggered-menu-wrapper:not([data-initialized]) .sm-prelayer {
+  visibility: hidden !important;
+}
+
+@media (max-width: 1024px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .staggered-menu-wrapper[data-open] { } }
+@media (max-width: 640px) { .sm-scope .staggered-menu-panel { width: 100%; left: 0; right: 0; } .sm-scope .staggered-menu-wrapper[data-open] } }
       `}</style>
     </div>
   );
