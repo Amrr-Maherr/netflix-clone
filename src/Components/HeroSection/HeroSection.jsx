@@ -1,15 +1,11 @@
 import Header from "../../Components/header/Header"
 import FadeContent from "../animation/FadeContent/FadeContent";
+import SplitText from "../animation/SplitText/SplitText";
 export default function Hero() {
   return (
     <>
       <Header />
-      <FadeContent
-        blur={true}
-        duration={1000}
-        easing="ease"
-        initialOpacity={0}
-      >
+      <FadeContent className="bg-black" blur={true} duration={1000} easing="ease" initialOpacity={0}>
         <section
           className="relative h-screen w-full bg-cover bg-center"
           style={{ backgroundImage: "url('/images/bg_image.jpg')" }}
@@ -17,18 +13,46 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/60"></div>
 
           <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 sm:px-6 md:px-12 text-center">
-            <h1 className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg max-w-3xl">
-              Unlimited movies, TV shows, and more
-            </h1>
-
-            <p className="text-white/80 mt-4 sm:mt-6 max-w-xl text-base sm:text-lg md:text-xl leading-relaxed drop-shadow">
-              Starts at EGP 100. Cancel anytime.
-            </p>
-            <p className="text-white/80 mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed drop-shadow">
-              Ready to watch? Enter your email to create or restart your
-              membership.
-            </p>
-
+            <SplitText
+              text="Unlimited movies, TV shows, and more"
+              className="text-white text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold drop-shadow-lg max-w-3xl"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+            />
+            <SplitText
+              text="Starts at EGP 100. Cancel anytime."
+              className="text-white/80 mt-4 sm:mt-6 max-w-xl text-base sm:text-lg md:text-xl leading-relaxed drop-shadow"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+            />
+            <SplitText
+              text="Ready to watch? Enter your email to create or restart your
+              membership."
+              className="text-white/80 mt-4 sm:mt-6 max-w-xl text-base sm:text-lg md:text-xl leading-relaxed drop-shadow"
+              delay={100}
+              duration={0.6}
+              ease="power3.out"
+              splitType="chars"
+              from={{ opacity: 0, y: 40 }}
+              to={{ opacity: 1, y: 0 }}
+              threshold={0.1}
+              rootMargin="-100px"
+              textAlign="center"
+            />
             <div className="mt-6 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-[830px]">
               <input
                 type="email"
