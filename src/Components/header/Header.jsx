@@ -1,3 +1,13 @@
+import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 // components/Navbar.jsx
 export default function Navbar() {
   return (
@@ -13,10 +23,25 @@ export default function Navbar() {
 
       {/* Buttons */}
       <div className="flex items-center space-x-4">
-        <button className="text-white text-sm md:text-base">Sign In</button>
-        <button className="bg-red-600 text-white text-sm md:text-base px-3 py-1 rounded hover:bg-red-700">
+        <Select className="bg-black">
+          <SelectTrigger className="w-[80px] md:w-[180px] bg-black/60 border-none outline-0 text-white">
+            <SelectValue placeholder="Select a Language" />
+          </SelectTrigger>
+          <SelectContent className="bg-black/50">
+            <SelectGroup className="bg-black/50">
+              <SelectLabel className="text-white">Language</SelectLabel>
+              <SelectItem className="text-white" value="arabic">
+                Arabic
+              </SelectItem>
+              <SelectItem className="text-white" value="english">
+                English
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Button className="bg-red-600 text-white text-sm md:text-base py-1 rounded hover:bg-red-700">
           Register
-        </button>
+        </Button>
       </div>
     </header>
   );
