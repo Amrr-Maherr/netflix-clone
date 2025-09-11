@@ -12,12 +12,12 @@ const menuItems = [
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 z-50 w-full h-[100dvh]">
+    <nav className="fixed top-0 z-50 w-full">
       <StaggeredMenu
         position="right"
         items={menuItems}
         displaySocials={false}
-        displayItemNumbering={false}
+        displayItemNumbering={true}
         menuButtonColor="#ffffff"
         openMenuButtonColor="#E50914"
         changeMenuColorOnOpen={true}
