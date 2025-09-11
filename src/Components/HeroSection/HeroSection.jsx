@@ -65,9 +65,9 @@ export default function Hero() {
               <Input
                 type="email"
                 placeholder="Email address"
-                className="w-full flex-1 h-[60px] px-4 rounded-md bg-black/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E50914] text-sm sm:text-base border-0"
+                className="w-full flex-1 h-[60px] py-4 px-4 rounded-md bg-black/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E50914] text-sm sm:text-base border-0"
               />
-              <Button className="bg-[#E50914] hover:bg-[#B00710] text-white font-semibold px-5 sm:px-6 h-[60px] rounded-md transition text-sm sm:text-base">
+              <Button className="bg-[#E50914] w-full md:w-fit hover:bg-[#B00710] text-white font-semibold px-5 sm:px-6 h-[60px] rounded-md transition text-sm sm:text-base">
                 Get Started &gt;
               </Button>
             </div>
