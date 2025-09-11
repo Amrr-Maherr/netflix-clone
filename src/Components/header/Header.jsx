@@ -1,6 +1,6 @@
 "use client";
 
-import StaggeredMenu from "../StaggeredMenu/StaggeredMenu";
+import StaggeredMenu from "../animation/StaggeredMenu/StaggeredMenu";
 
 const menuItems = [
   { label: "Home", ariaLabel: "Go to home page", link: "/" },
